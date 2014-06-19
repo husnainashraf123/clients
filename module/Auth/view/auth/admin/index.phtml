@@ -1,0 +1,176 @@
+<?php
+use Zend\Session\Container;
+?>
+<div class="row">
+    <div class="col-xs-12">
+        <?php 
+//         print_r($current_website_id);
+    if (isset($message) && $message != ''){ 
+      if($message == "User has been Deleted"){
+       ?>
+        <div class="alert alert-block alert-danger">
+            <button type="button" class="close" data-dismiss="alert">
+                    <i class="icon-remove"></i>
+            </button>
+
+            <i class="icon-ok red"></i>
+            <?php echo $message; ?>
+
+        </div>          
+    <?php  }else{  ?>
+    
+        <div class="alert alert-block alert-success">
+            <button type="button" class="close" data-dismiss="alert">
+                    <i class="icon-remove"></i>
+            </button>
+
+            <i class="icon-ok green"></i>
+            <?php echo $message; ?>
+        </div> 
+    <?php  } 
+    
+    } ?>
+        <h3 class="header smaller lighter blue">Users List</h3>
+        <div class="table-header">
+            <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'create')); ?>" class="btn btn-primary">Add New User</a>
+            <a href="#" class="btn btn-danger pull-right multiple-delete">Delete Selected User</a>
+        </div>
+
+        <div class="table-responsive">
+            <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="center">
+                            <label>
+                                <input type="checkbox" class="ace" data-id="all" />
+                                <span class="lbl"></span>
+                            </label>
+                        </th>
+                        <th>User Id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th class="hidden-480">Active</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                        <?php
+                        foreach ($rowset as $row) {
+                            ?>
+                            <td class="center">
+                                <label>
+                                    <input type="checkbox" class="ace" data-id="<?php  echo $row['usr_id']; ?>" />
+                                    <span class="lbl"></span>
+                                </label>
+                            </td>
+
+                            <td>
+                              <?php  echo $row['usr_id']; ?>
+                            </td>
+                            <td><?php  echo $row['usr_name']; ?></td>
+                            <td><?php  echo $row['usr_email']; ?></td>
+
+                            
+                            <td><?php  echo $row['roles_id']; ?></td>
+                            <td><?php  echo $row['usr_active']; ?></td>
+
+                            <td>
+                                <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                    <a class="blue" href="#">
+                                        <i class="icon-zoom-in bigger-130"></i>
+                                    </a>
+
+                                    <a class="green" href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>">
+                                        <i class="icon-pencil bigger-130"></i>
+                                    </a>
+                                    <!--<a href="<?php //echo $this->url('clients', array('action' => 'dialoge', 'id' => $client->id)); ?>" class="tooltip-error" data-rel="tooltip" title="Dialoge">-->
+                                    <a href="#" role="button" class="red actiondeleteuser" data-id="<?php echo $row['usr_id']; ?>" > 
+                                        <i class="icon-trash bigger-130"></i>
+                                    </a>
+                                </div>
+
+                                <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                    <div class="inline position-relative">
+                                        <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-caret-down icon-only bigger-120"></i>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                            <li>
+                                                <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                    <span class="blue">
+                                                        <i class="icon-zoom-in bigger-120"></i>
+                                                    </span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                    <span class="green">
+                                                        <i class="icon-edit bigger-120"></i>
+                                                    </span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="<?php echo $this->url('clients', array('action' => 'delete', 'id' => $row['usr_id'])); ?>" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                    <span class="red">
+                                                        <i class="icon-trash bigger-120"></i>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php } 
+//             $message='';
+//        $session = new Container('link');
+//        $session->offsetSet('delete_user_msg', '');                    
+                    ?>     
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="modal-table" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header no-padding">
+                <div class="table-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="white">&times;</span>
+                    </button>
+                    Delete User
+                </div>
+            </div>
+
+            <div class="modal-body no-padding">
+                <h4 style="margin: 20px 3px;">Are you sure you want to delete ?</h4>
+            </div>
+
+            <div class="modal-footer no-margin-top">
+               
+                   <button class="btn btn-sm btn-danger pull-left delete_user_btn" data-dismiss="modal">
+                        <i class="icon-remove"></i>
+                        Yes
+                    </button>
+                
+                <button class="btn btn-sm btn-primary pull-left" data-dismiss="modal">
+                    <i class="icon-only"></i>
+                    Close
+                </button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-table -->
+                    <?php 
+             $message='';
+        $session = new Container('link');
+        $session->offsetSet('delete_user_msg', '');                    
+                    ?>  

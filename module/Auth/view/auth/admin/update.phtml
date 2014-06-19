@@ -1,0 +1,85 @@
+<div class="page-header">
+        <h1>
+                Update User
+                
+        </h1>
+</div><!-- /.page-header -->
+<?php
+//echo '<h1>Update</h1>';
+// $form = $this->form;
+$form->prepare();
+// Assuming the "contact/process" route exists...
+$form->setAttribute('action', $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $id))); //'contact/process'));
+// Set the method attribute for the form
+$form->setAttribute('method', 'post');
+$form->setAttribute('class', 'form-horizontal');
+$form->setAttribute('id', 'createUser');
+
+echo $this->form()->openTag($form); ?>
+<div class="form-group">
+       <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Username </label>
+       <div class="col-sm-9">
+           <?php
+            echo $this->formElement($form->get('usr_name'));   
+            echo $this->formElementErrors($form->get('usr_name'));
+         ?>
+       </div>
+</div>      
+<div class="form-group">
+       <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Email </label>
+       <div class="col-sm-9">        
+        <?php
+            echo $this->formElement($form->get('usr_email'));
+            echo $this->formElementErrors($form->get('usr_email'));
+         ?>
+       </div>
+</div>
+<div class="form-group">
+       <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Password </label>
+       <div class="col-sm-9">           
+       <?php
+            echo $this->formElement($form->get('usr_password'));
+            echo $this->formElementErrors($form->get('usr_password'));
+         ?>
+        </div>
+</div>
+<div class="form-group">
+       <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Roles </label>
+       <div class="col-sm-9">  
+        <?php
+            echo $this->formElement($form->get('roles_id'));
+            echo $this->formElementErrors($form->get('roles_id'));
+         ?>
+        </div>
+</div>
+<div class="form-group">
+       <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Active </label>
+       <div class="col-sm-9">             
+        <?php
+            echo $this->formElement($form->get('usr_active'));
+            echo $this->formElementErrors($form->get('usr_active'));
+         ?>
+        
+        </div>
+</div> 
+
+<div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+                       <?php echo $this->formElement($form->get('submit'));
+            echo $this->formElementErrors($form->get('submit')); ?>
+               
+
+                &nbsp; &nbsp; &nbsp;
+                <button class="btn" type="reset">
+                        <i class="icon-undo bigger-110"></i>
+                        Reset
+                </button>
+        </div>
+</div>
+
+        <div class="hr hr-24"></div>
+
+<?php
+//echo $this->formCollection($form);
+echo $this->form()->closeTag();
+?>
