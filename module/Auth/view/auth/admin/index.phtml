@@ -33,7 +33,7 @@ use Zend\Session\Container;
         <h3 class="header smaller lighter blue">Users List</h3>
         <div class="table-header">
             <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'create')); ?>" class="btn btn-primary">Add New User</a>
-            <a href="#" class="btn btn-danger pull-right multiple-delete">Delete Selected User</a>
+            <a href="#" class="btn btn-danger pull-right multiple-delete" data-id="user">Delete Selected User</a>
         </div>
 
         <div class="table-responsive">

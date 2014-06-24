@@ -1,4 +1,4 @@
-body {
+/*body {
     padding-top: 60px;
     padding-bottom: 40px;
 }
@@ -34,4 +34,9 @@ div.container a.brand {
     background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
     margin-left: 0;
     padding: 8px 20px 12px 40px;
+}*/
+
+.input-group-addon{
+    width: 5% !important;
+    float: left;
 }
