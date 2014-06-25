@@ -1,14 +1,17 @@
 $(document).ready(function() {
-//    $( "#options2" ).trigger( "click" );
+
 
     var cb = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         $('#reportrange input[name=date-range-picker]').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-   
-        var daterange=$('.get-date-range').val();
-        window.location.assign("http://local.zendapp/link/daterange?daterange=" + daterange);
-        
+
+        var daterange = $('.get-date-range').val();
+        var url = $("#addbuttonlink").attr("href")
+        var website_id = url.substring(url.lastIndexOf('/') + 1);
+
+        window.location.assign("http://local.zendapp/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+//         $('#reportrange span').html(daterange);
 //        alert($('.get-date-range').val());
         //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
     }
@@ -64,11 +67,12 @@ $(document).ready(function() {
         }
     };
 
-    $('#reportrange span').html('Select Date range');
+    $('#reportrange span').html('Select Date Range');
+
 //    $('#reportrange input[name=date-range-picker]').val(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-   
-    $('#reportrange').daterangepicker(optionSet1, cb);
-    $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+
+    $('#reportrange').daterangepicker(optionSet2, cb);
+//    $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
     $('#reportrange').on('show.daterangepicker', function() {
         console.log("show event fired");
     });
@@ -151,6 +155,22 @@ $().ready(function() {
         }
 
     });
+    // validate Client form on keyup and submit
+    $("#createTranscript").validate({
+        rules: {
+            name: "required",
+            date_posted: "required",
+            date_revised: "required",
+            date_received: "required",
+        },
+        messages: {
+            name: "Please enter your Name",
+            date_posted: "Please enter Posted Date",
+            date_revised: "Please enter Revised Date",
+            date_received: "Please enter Recevied Date",
+        }
+
+    });
     // validate Link form on keyup and submit
     $("#createLink").validate({
         rules: {
@@ -171,37 +191,6 @@ $().ready(function() {
 
 // A $( document ).ready() block.
 $(document).ready(function() {
-
-//    $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
-//					$(this).next().focus();
-//    });
-
-
-//    $('#reportrange').daterangepicker(
-//            {
-//                ranges: {
-//                    'Today': [moment(), moment()],
-//                    'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-//                    'Last 7 Days': [moment().subtract('days', 6), moment()],
-//                    'Last 30 Days': [moment().subtract('days', 29), moment()],
-//                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-//                    'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-//                },
-//                startDate: moment().subtract('days', 29),
-//                endDate: moment()
-//            },
-//    function(start, end) {
-//        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-//        $('#reportrange input[name=date-range-picker]').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-//
-//        alert($('.get-date-range').val());
-//            $('.get-date-range').change(function() {
-//        alert($(this).val());
-//    });
-//
-//    });
-
-
 
     var yourRegex = /^www?\.[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;// url
     $('#website').tagsInput({
@@ -307,17 +296,12 @@ $(document).ready(function() {
         }
     });
 
-//    var value = $("#form-field-select-1").val();
+
     $('.alert').delay(5000).fadeOut(400);
-//   $("#addbuttonlink").attr("href", "/link/add/" + value);
-//   $(".current-websiteid").attr("data-id", rowId );
 
     $("#form-field-select-1").change(function() {
         var rowId = this.value;
         window.location.assign("http://local.zendapp/link/changewebsite/" + rowId);
-//        $("#addbuttonlink").attr("href", "/link/add/" + rowId);
-//        $(".current-websiteid").attr("data-id", rowId );
-//        makeTable(this.value);
     });
 
     $('.actiondeletelink').on('click', function(e) {
@@ -333,78 +317,31 @@ $(document).ready(function() {
     $("#datepicker").datepicker({
         showOtherMonths: true,
         selectOtherMonths: false,
-        //isRTL:true,
 
+    });
+    $("#date_received").datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: false,
 
-        /*
-         changeMonth: true,
-         changeYear: true,
-         
-         showButtonPanel: true,
-         beforeShow: function() {
-         //change button colors
-         var datepicker = $(this).datepicker( "widget" );
-         setTimeout(function(){
-         var buttons = datepicker.find('.ui-datepicker-buttonpane')
-         .find('button');
-         buttons.eq(0).addClass('btn btn-xs');
-         buttons.eq(1).addClass('btn btn-xs btn-success');
-         buttons.wrapInner('<span class="bigger-110" />');
-         }, 0);
-         }
-         */
+    });
+    $("#date_posted").datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: false,
+
+    });
+    $("#date_revised").datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: false,
+
     });
 
     $('.input-mask-phone').mask('(999) 999-9999');
 });
 
-//function makeTable(id) {
-//    var rowId = id;
-////    alert(rowId);
-////    $('.alert').show();
-//    $("#addbuttonlink").attr("href", "/link/add/" + rowId);
-//    $.ajax({
-//        type: 'GET',
-//        url: '/link/getLinkById/' + rowId,
-//        dataType: 'json',
-//        success: function(response)
-//        {
-////                    console.log(response.data);
-//
-//            $('.linktable > tr').remove();
-//            for (cnt in response.data) {
-////                console.log(response.data[cnt]);
-//                var mydiv = '<tr><td class="center"><input type="checkbox" class="ace" data-id="' + response.data[cnt].id + '"/><span class="lbl"></span></label></td><td>' + response.data[cnt].date + '</td>\n\
-//                    <td>' + response.data[cnt].url + '</td><td class="hidden-480 hidden">3,330</td><td class="hidden">Feb 12</td> <td class="hidden-480 hidden">\n\
-//                   <span class="label label-sm label-warning">Expiring</span></td><td><div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">\n\
-//                   <a class="blue" href="#"><i class="icon-zoom-in bigger-130"></i></a><a class="green" href="/link/edit/' + response.data[cnt].id + '"><i class="icon-pencil bigger-130"></i></a>\n\
-//                    <a href="#" class="red" onclick="deletelink(' + response.data[cnt].id + ');" ><i class="icon-trash bigger-130"></i></a></div>\n\
-//                    <div class="visible-xs visible-sm hidden-md hidden-lg"><div class="inline position-relative"><button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">n\
-//                   <i class="icon-caret-down icon-only bigger-120"></i></button> <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">\n\
-//                   <li><a href="#" class="tooltip-info" data-rel="tooltip" title="View"><span class="blue"> <i class="icon-zoom-in bigger-120"></i></span></a></li>\n\
-//                   <li><a href="#" class="tooltip-success" data-rel="tooltip" title="Edit"><span class="green"><i class="icon-edit bigger-120"></i>\n\
-//                   <li> <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"><span class="red"><i class="icon-trash bigger-120"></i></span></a></li>\n\
-//                    </ul></div></div></td></tr>';
-//                $(".linktable").append(mydiv);
-//            }
-//
-//
-//            $(".current-websiteid").attr("data-id", rowId );
-//
-//
-//        }
-//
-//    });
-//}
-
 function deletelink(id) {
     var rowId = id;
     $('#modal-table').modal('show');
     var current_website = $("#form-field-select-1").val();
-//    var url = window.location.pathname;
-//    var main_id = url.substring(url.lastIndexOf('/') + 1)
-//alert(current_website);
-//alert(rowId);
     $('.delete_link_btn').on('click', function(e) {
         $.ajax({
             url: '/link/delete/' + rowId,
