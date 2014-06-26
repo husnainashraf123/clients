@@ -242,11 +242,9 @@ $(document).ready(function() {
     $('.multiple-delete').on('click', function(e) {
         var part = $(this).attr('data-id');
 //        alert(part);
-        if (part == "link") {
+        if (part == "link" || part == "transcript") {
             var current_website = $("#form-field-select-1").val();
         }
-
-
         if ($(':checkbox:checked').size() > 0) {
             $('#modal-table').modal('show');
 
@@ -254,24 +252,23 @@ $(document).ready(function() {
                 $(':checkbox:checked').each(function(i) {
 
                     var rowId = $(this).attr('data-id');
-//                                alert(rowId);
                     if (rowId != 'all') {
 
                         if (part == "client") {
                             var url = '/clients/delete/' + rowId;
                         } else if (part == "link") {
-//                             alert(rowId);
                             var url = '/link/delete/' + rowId;
+                        } else if (part == "transcript") {
+
+                            var url = '/transcript/delete/' + rowId;
                         } else {
                             var url = '/auth/admin/delete/' + rowId;
                         }
-//                         alert(url);
                         $.ajax({
                             url: url,
                             dataType: 'json',
                             success: function(data)
                             {
-
 
                             }
                         });
@@ -282,6 +279,8 @@ $(document).ready(function() {
                 window.location.assign("http://local.zendapp/clients/setmessage");
             } else if (part == "link") {
                 window.location.assign("http://local.zendapp/link/setmessage/" + current_website);
+            } else if (part == "transcript") {
+                window.location.assign("http://local.zendapp/transcript/setmessage/" + current_website);
             } else {
                 window.location.assign("http://local.zendapp/auth/admin/setmessage");
             }
@@ -289,7 +288,9 @@ $(document).ready(function() {
             if (part == "client") {
                 alert("Please select the Client");
             } else if (part == "link") {
-                alert("Please select the Link");
+                alert("Please select the Links");
+            } else if (part == "transcript") {
+                alert("Please select the Transcripts");
             } else {
                 alert("Please select the User");
             }
@@ -301,56 +302,65 @@ $(document).ready(function() {
 
     $("#form-field-select-1").change(function() {
         var rowId = this.value;
-        window.location.assign("http://local.zendapp/link/changewebsite/" + rowId);
+        var dataid = $('#form-field-select-1').attr('data-id');
+        if (dataid == "link") {
+            window.location.assign("http://local.zendapp/link/changewebsite/" + rowId);
+        } else {
+            window.location.assign("http://local.zendapp/transcript/changewebsite/" + rowId);
+        }
+
     });
 
     $('.actiondeletelink').on('click', function(e) {
-//        console.log(this);
 
         var rowId = $(this).attr('data-id');
         alert(rowId);
         $('#modal-table').modal('show');
-
-
     });
 
     $("#datepicker").datepicker({
         showOtherMonths: true,
         selectOtherMonths: false,
-
     });
     $("#date_received").datepicker({
         showOtherMonths: true,
         selectOtherMonths: false,
-
     });
     $("#date_posted").datepicker({
         showOtherMonths: true,
         selectOtherMonths: false,
-
     });
     $("#date_revised").datepicker({
         showOtherMonths: true,
         selectOtherMonths: false,
-
     });
 
     $('.input-mask-phone').mask('(999) 999-9999');
 });
 
-function deletelink(id) {
+function deleterow(id, part) {
     var rowId = id;
+    alert(part);
     $('#modal-table').modal('show');
     var current_website = $("#form-field-select-1").val();
-    $('.delete_link_btn').on('click', function(e) {
+    $('.delete_user_btn').on('click', function(e) {
+        if (part == 'link') {
+            var url = '/link/delete/' + rowId;
+        } else {
+            var url = '/transcript/delete/' + rowId;
+        }
         $.ajax({
-            url: '/link/delete/' + rowId,
+            url: url,
             dataType: 'json',
             success: function(data)
             {
                 console.log(current_website);
 
-                window.location.assign("http://local.zendapp/link/setmessage/" + current_website);
+                if (part == 'link') {
+                    window.location.assign("http://local.zendapp/link/setmessage/" + current_website);
+                } else {
+                    window.location.assign("http://local.zendapp/transcript/setmessage/" + current_website);
+                }
 
             }
         });
