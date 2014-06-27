@@ -9,8 +9,13 @@ $(document).ready(function() {
         var daterange = $('.get-date-range').val();
         var url = $("#addbuttonlink").attr("href")
         var website_id = url.substring(url.lastIndexOf('/') + 1);
-
-        window.location.assign("http://local.zendapp/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+        var parts=$("#form-field-select-1").attr('data-id');
+        if (parts == 'link'){
+             window.location.assign("http://local.zendapp/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+        }else{
+             window.location.assign("http://local.zendapp/transcript/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+        }
+       
 //         $('#reportrange span').html(daterange);
 //        alert($('.get-date-range').val());
         //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
@@ -162,12 +167,44 @@ $().ready(function() {
             date_posted: "required",
             date_revised: "required",
             date_received: "required",
+            fileupload: {
+               required: true,
+               extension:'docx|doc'
+            },
         },
         messages: {
             name: "Please enter your Name",
             date_posted: "Please enter Posted Date",
             date_revised: "Please enter Revised Date",
             date_received: "Please enter Recevied Date",
+            fileupload: {
+                required: "Please selet some file",
+                extension: 'Please enter a value with a valid mimetype.'
+            },
+        }
+
+    });
+    // validate Client form on keyup and submit
+    $("#updateTranscript").validate({
+        rules: {
+            name: "required",
+            date_posted: "required",
+            date_revised: "required",
+            date_received: "required",
+            fileupload: {
+//               required: true,
+               extension:'docx|doc'
+            },
+        },
+        messages: {
+            name: "Please enter your Name",
+            date_posted: "Please enter Posted Date",
+            date_revised: "Please enter Revised Date",
+            date_received: "Please enter Recevied Date",
+            fileupload: {
+//                required: "Please selet some file",
+                extension: 'Please enter a value with a valid mimetype.'
+            },
         }
 
     });
@@ -388,8 +425,10 @@ function deleterow(id, part) {
             var url = '/transcript/delete/' + rowId;
         }
         $.ajax({
+            type: 'POST',
             url: url,
             dataType: 'json',
+            data: {'current_website': current_website},
             success: function(data)
             {
                 console.log(current_website);
