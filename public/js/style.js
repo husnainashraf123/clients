@@ -186,7 +186,6 @@ $().ready(function() {
             },
         }
     });
-
 });
 
 // A $( document ).ready() block.
@@ -298,6 +297,11 @@ $(document).ready(function() {
     });
 
 
+//    $('.download-transcript').on('click', function(e) {
+//
+//        
+//    });
+
     $('.alert').delay(5000).fadeOut(400);
 
     $("#form-field-select-1").change(function() {
@@ -337,10 +341,44 @@ $(document).ready(function() {
 
     $('.input-mask-phone').mask('(999) 999-9999');
 });
+function downloadAll(current_website_id) {
+//            alert(current_website_id);
+    var download_ids = new Array();
+    var num = 0;
+    if ($(':checkbox:checked').size() > 0) {
+        $(':checkbox:checked').each(function(i) {
 
+            var rowId = $(this).attr('data-id');
+            if (rowId != 'all') {
+                num = 1;
+                download_ids.push(rowId);
+            } else {
+                num = 0
+                return false;
+            }
+        });
+        input_value = download_ids.toString();
+
+    }    
+        var url = '/transcript/downloadall/' + current_website_id;
+        if(num==0){
+            input_value='';
+        }
+        $.ajax({
+           type: 'POST',
+            url: url,
+            data: {'downloadids': input_value},
+            success: function()
+            {
+
+            }
+        });
+
+
+}
 function deleterow(id, part) {
     var rowId = id;
-    alert(part);
+
     $('#modal-table').modal('show');
     var current_website = $("#form-field-select-1").val();
     $('.delete_user_btn').on('click', function(e) {
