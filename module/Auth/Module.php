@@ -50,8 +50,18 @@ class Module
 				// Add this for SMTP transport
 				'mail.transport' => function (ServiceManager $serviceManager) {
 					$config = $serviceManager->get('Config'); 
-					$transport = new Smtp();                
-					$transport->setOptions(new SmtpOptions($config['mail']['transport']['options']));
+					$transport = new Smtp();  
+                                        $options   = new SmtpOptions(array(
+                                            'name'              => 'smtp.gmail.com',
+                                            'host'              => 'smtp.gmail.com',
+                                            'connection_class'  => 'plain',
+                                            'connection_config' => array(
+                                                'username' => 'seolawyers2012@gmail.com',
+                                                'password' => '9382devilx',
+                                                 'ssl'      => 'tls',
+                                            ),
+                                        ));
+					$transport->setOptions($options);
 					return $transport;
 				},
             ),

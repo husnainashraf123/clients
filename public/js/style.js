@@ -7,15 +7,19 @@ $(document).ready(function() {
         $('#reportrange input[name=date-range-picker]').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 
         var daterange = $('.get-date-range').val();
+        
         var url = $("#addbuttonlink").attr("href")
+//        alert(url);
         var website_id = url.substring(url.lastIndexOf('/') + 1);
-        var parts=$("#form-field-select-1").attr('data-id');
-        if (parts == 'link'){
-             window.location.assign("http://local.zendapp/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
-        }else{
-             window.location.assign("http://local.zendapp/transcript/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+        var parts = $("#form-field-select-1").attr('data-id');
+        if (parts == 'link') {
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+        } else if(parts == 'lead'){
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+        } else {
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/daterange?daterange=" + daterange + "&websiteid=" + website_id);
         }
-       
+
 //         $('#reportrange span').html(daterange);
 //        alert($('.get-date-range').val());
         //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
@@ -168,8 +172,8 @@ $().ready(function() {
             date_revised: "required",
             date_received: "required",
             fileupload: {
-               required: true,
-               extension:'docx|doc'
+                required: true,
+                extension: 'docx|doc'
             },
         },
         messages: {
@@ -184,7 +188,7 @@ $().ready(function() {
         }
 
     });
-    // validate Client form on keyup and submit
+    // validate Transcript form on keyup and submit
     $("#updateTranscript").validate({
         rules: {
             name: "required",
@@ -193,7 +197,7 @@ $().ready(function() {
             date_received: "required",
             fileupload: {
 //               required: true,
-               extension:'docx|doc'
+                extension: 'docx|doc'
             },
         },
         messages: {
@@ -207,6 +211,47 @@ $().ready(function() {
             },
         }
 
+    });
+    // validate Client form on keyup and submit
+    $("#createLead").validate({
+        rules: {
+            lead_name: "required",
+            caller_type: "required",
+            lead_date: "required",
+            lead_source: "required",
+            inc_phone: "required",
+            lead_email: {
+                required: true,
+                email: true,
+            },
+            call_duration: {
+                integer: true
+            },
+        },
+        messages: {
+            lead_name: "Please enter your Name",
+            caller_type: "Please enter Select Type",
+            lead_date: "Please enter Select Date",
+            lead_source: "Please Select Lead Source",
+            inc_phone: "Please enter Phone Number",
+            lead_email: {
+                required: "Please enter your Email",
+                email: "Please enter valid Email",
+            },
+            call_duration: {
+                integer: "Please enter an integer value",
+            },
+        }
+
+    });
+    // validate Book form on keyup and submit
+    $("#createBook").validate({
+        rules: {
+            name: "required",
+        },
+        messages: {
+           name: "Please enter Book name",
+        }
     });
     // validate Link form on keyup and submit
     $("#createLink").validate({
@@ -246,7 +291,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(data)
                 {
-                    window.location.assign("http://local.zendapp/clients/setmessage")
+                    window.location.assign("http://dashboard.speakeasymarketinginc.com/clients/setmessage")
 
 
                 }
@@ -267,7 +312,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(data)
                 {
-                    window.location.assign("http://local.zendapp/auth/admin/setmessage");
+                    window.location.assign("http://dashboard.speakeasymarketinginc.com/auth/admin/setmessage");
 
                 }
             });
@@ -276,26 +321,31 @@ $(document).ready(function() {
     });
 
     $('.multiple-delete').on('click', function(e) {
-        var part = $(this).attr('data-id');
-//        alert(part);
-        if (part == "link" || part == "transcript") {
+         var part = $(this).attr('data-id');
+        if (part == "link" || part == "transcript" || part == "book" || part == "lead") {
             var current_website = $("#form-field-select-1").val();
         }
+       
         if ($(':checkbox:checked').size() > 0) {
             $('#modal-table').modal('show');
-
+            var value = 0;
             $('.delete_user_btn').on('click', function(e) {
-                $(':checkbox:checked').each(function(i) {
 
+                $(':checkbox:checked').each(function(i) {
                     var rowId = $(this).attr('data-id');
+//                    alert(rowId);
+                    value = value + 1;
                     if (rowId != 'all') {
 
                         if (part == "client") {
                             var url = '/clients/delete/' + rowId;
                         } else if (part == "link") {
                             var url = '/link/delete/' + rowId;
+                        } else if (part == "book") {
+                            var url = '/book/delete/' + rowId;
+                        } else if (part == "lead") {
+                            var url = '/lead/delete/' + rowId;
                         } else if (part == "transcript") {
-
                             var url = '/transcript/delete/' + rowId;
                         } else {
                             var url = '/auth/admin/delete/' + rowId;
@@ -305,26 +355,41 @@ $(document).ready(function() {
                             dataType: 'json',
                             success: function(data)
                             {
+                                
+                                if (value == $(':checkbox:checked').size()) {                    
+                                if (part == "client") {
+                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/clients/setmessage");
+                                } else if (part == "link") {
+                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/link/setmessage/" + current_website);
+                                } else if (part == "book") {
+                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/book/setmessage/" + current_website);
+                                } else if (part == "lead") {
+                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/setmessage/" + current_website);
+                                } else if (part == "transcript") {
+                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/setmessage/" + current_website);
+                                } else {
+                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/auth/admin/setmessage");
+                                }
+                            }
 
                             }
                         });
                     }
                 });
+                
             });
-            if (part == "client") {
-                window.location.assign("http://local.zendapp/clients/setmessage");
-            } else if (part == "link") {
-                window.location.assign("http://local.zendapp/link/setmessage/" + current_website);
-            } else if (part == "transcript") {
-                window.location.assign("http://local.zendapp/transcript/setmessage/" + current_website);
-            } else {
-                window.location.assign("http://local.zendapp/auth/admin/setmessage");
-            }
+
+
+
         } else {
             if (part == "client") {
                 alert("Please select the Client");
             } else if (part == "link") {
                 alert("Please select the Links");
+            } else if (part == "book") {
+                alert("Please select the Books");
+            } else if (part == "lead") {
+                alert("Please select the Leads");
             } else if (part == "transcript") {
                 alert("Please select the Transcripts");
             } else {
@@ -333,21 +398,19 @@ $(document).ready(function() {
         }
     });
 
-
-//    $('.download-transcript').on('click', function(e) {
-//
-//        
-//    });
-
     $('.alert').delay(5000).fadeOut(400);
 
     $("#form-field-select-1").change(function() {
         var rowId = this.value;
         var dataid = $('#form-field-select-1').attr('data-id');
         if (dataid == "link") {
-            window.location.assign("http://local.zendapp/link/changewebsite/" + rowId);
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/link/changewebsite/" + rowId);
+        } else if (dataid == "book") {
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/book/changewebsite/" + rowId);
+        } else if (dataid == "lead") {
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/changewebsite/" + rowId);
         } else {
-            window.location.assign("http://local.zendapp/transcript/changewebsite/" + rowId);
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/changewebsite/" + rowId);
         }
 
     });
@@ -378,6 +441,9 @@ $(document).ready(function() {
 
     $('.input-mask-phone').mask('(999) 999-9999');
 });
+function exportAll(data) {
+    concole.log(data);
+}
 function downloadAll(current_website_id) {
 //            alert(current_website_id);
     var download_ids = new Array();
@@ -396,20 +462,20 @@ function downloadAll(current_website_id) {
         });
         input_value = download_ids.toString();
 
-    }    
-        var url = '/transcript/downloadall/' + current_website_id;
-        if(num==0){
-            input_value='';
-        }
-        $.ajax({
-           type: 'POST',
-            url: url,
-            data: {'downloadids': input_value},
-            success: function()
-            {
+    }
+    var url = '/transcript/downloadall/' + current_website_id;
+    if (num == 0) {
+        input_value = '';
+    }
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: {'downloadids': input_value},
+        success: function()
+        {
 
-            }
-        });
+        }
+    });
 
 
 }
@@ -421,6 +487,10 @@ function deleterow(id, part) {
     $('.delete_user_btn').on('click', function(e) {
         if (part == 'link') {
             var url = '/link/delete/' + rowId;
+        } else if (part == "book") {
+            var url = '/book/delete/' + rowId;
+        } else if (part == 'lead') {
+            var url = '/lead/delete/' + rowId;
         } else {
             var url = '/transcript/delete/' + rowId;
         }
@@ -434,9 +504,13 @@ function deleterow(id, part) {
                 console.log(current_website);
 
                 if (part == 'link') {
-                    window.location.assign("http://local.zendapp/link/setmessage/" + current_website);
+                    window.location.assign("http://dashboard.speakeasymarketinginc.com/link/setmessage/" + current_website);
+                } else if (part == "book") {
+                    window.location.assign("http://dashboard.speakeasymarketinginc.com/book/setmessage/" + current_website);
+                } else if (part == "lead") {
+                    window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/setmessage/" + current_website);
                 } else {
-                    window.location.assign("http://local.zendapp/transcript/setmessage/" + current_website);
+                    window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/setmessage/" + current_website);
                 }
 
             }
@@ -449,7 +523,7 @@ jQuery(function($) {
     var oTable1 = $('#sample-table-2').dataTable({
         "aoColumns": [
             {"bSortable": false},
-            null, null, null, null, null,
+            null, null, null, null, null, null, null,
             {"bSortable": false}
         ]});
 
