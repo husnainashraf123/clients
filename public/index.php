@@ -10,6 +10,9 @@ chdir(dirname(__DIR__));
 require_once getcwd(). '/vendor/Classes/PHPExcel/PHPExcel.php';
 require_once getcwd(). '/vendor/Classes/PHPExcel/PHPExcel/Writer/Excel2007.php'; 
 require_once getcwd(). '/vendor/Classes/PHPExcel/PHPExcel/IOFactory.php'; 
+require_once getcwd(). '/vendor/Classes/gapi.php'; 
+require_once getcwd(). '/vendor/Classes/Google/Google_Client.php'; 
+require_once getcwd(). '/vendor/Classes/Google/contrib/Google_AnalyticsService.php'; 
 //require_once getcwd(). '/vendor/Classes/PHPExcel/PHPExcel/Autoloader.php'; 
 // Decline static file requests back to the PHP built-in webserver
 if (php_sapi_name() === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) {
