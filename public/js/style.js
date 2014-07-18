@@ -407,6 +407,8 @@ $(document).ready(function() {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/link/changewebsite/" + rowId);
         } else if (dataid == "book") {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/book/changewebsite/" + rowId);
+        } else if (dataid == "userright") {
+            window.location.assign("http://local.zendapp/userright/" + rowId);
         } else if (dataid == "lead") {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/changewebsite/" + rowId);
         } else {

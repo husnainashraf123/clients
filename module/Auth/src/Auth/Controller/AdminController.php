@@ -7,6 +7,8 @@ use Zend\View\Model\ViewModel;
 use Zend\Db\TableGateway\TableGateway;
 use Auth\Form\UserForm;
 use Auth\Form\UserFilter;
+use Clients\Model\UserRight;
+use Clients\Model\UserRightTable;
 use Zend\Session\Container;
 
 class AdminController extends AbstractActionController {
@@ -39,7 +41,25 @@ class AdminController extends AbstractActionController {
                 unset($data['submit']);
                 if (empty($data['usr_registration_date']))
                     $data['usr_registration_date'] = '2013-07-19 12:00:00';
+//                print_r($data);exit;
                 $this->getUsersTable()->insert($data);
+                $last_user_id = $this->getUsersTable()->lastInsertValue; // last inserted id
+                if ($data['roles_id'] == 2) {
+                    if ($last_user_id > 0) {
+                        $userRight = new UserRight();
+                        $userRight->user_id = $last_user_id;
+                        $userRight->crud_user = 0;
+                        $userRight->crud_client = 0;
+                        $userRight->crud_lead = 0;
+                        $userRight->crud_link = 0;
+                        $userRight->crud_traffic = 0;
+                        $userRight->crud_transcript = 0;
+                        $userRight->crud_book = 0;
+                        $tableGateway = $this->getConnection();
+                        $userRightTable = new UserRightTable($tableGateway);
+                        $userRightTable->saveUserRight($userRight);
+                    }
+                }
                 $session = new Container('link');
                 $session->offsetSet('delete_user_msg', "User has been Created");
                 return $this->redirect()->toRoute('auth/default', array('controller' => 'admin', 'action' => 'index'));
@@ -114,6 +134,16 @@ class AdminController extends AbstractActionController {
         $session->offsetSet('delete_user_msg', "User has been Deleted");
 
         return $this->redirect()->toRoute('auth/default', array('controller' => 'admin', 'action' => 'index'));
+    }
+
+    public function getConnection() {
+        $sm = $this->getServiceLocator();
+        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+        $resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new
+                \Clients\Model\UserRight);
+        $tableGateway = new \Zend\Db\TableGateway\TableGateway('user_rights', $dbAdapter, null, $resultSetPrototype);
+        return $tableGateway;
     }
 
 }

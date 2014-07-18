@@ -29,6 +29,16 @@ class UsersTable
         }
         return $row;
     }
+    public function getUsername($usr_id)
+    {
+        $usr_id  = (int) $usr_id;
+        $rowset = $this->tableGateway->select(array('usr_id' => $usr_id));
+        $row = $rowset->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        return $row;
+    }
 
 	public function getUserByToken($token)
     {
