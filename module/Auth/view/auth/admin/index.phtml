@@ -6,7 +6,7 @@ $auth = new AuthenticationService();
 <div class="row">
     <div class="col-xs-12">
         <?php 
-//         print_r($current_website_id);
+//         print_r($applying_user_rights);exit;
     if (isset($message) && $message != ''){ 
       if($message == "User has been Deleted"){
        ?>
@@ -34,18 +34,26 @@ $auth = new AuthenticationService();
     } ?>
         <h3 class="header smaller lighter blue">Users List</h3>
         <div class="table-header" style="min-height: 42px;">
-             <?php if($auth->getIdentity()->roles_id == 3){
-                             ?>
-                                 
-                                 <?php
-                                }else{
-                            ?>   
-            <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'create')); ?>" class="btn btn-primary">Add New User</a>
+             <?php if ($auth->getIdentity()->roles_id == 3) {
+                ?>
+
+                <?php
+            } else if ($auth->getIdentity()->roles_id == 2) {
+                if ($applying_user_rights->crud_user == 1) {
+                    ?>
+                    <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'create')); ?>" class="btn btn-primary">Add New User</a>
             <a href="#" class="btn btn-danger pull-right multiple-delete" data-id="user">Delete Selected User</a>
-                        <?php
-                              } 
-                          ?>
-            
+                <?php
+                } else {
+                    
+                }
+            } else {
+                ?>   
+                <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'create')); ?>" class="btn btn-primary">Add New User</a>
+            <a href="#" class="btn btn-danger pull-right multiple-delete" data-id="user">Delete Selected User</a>
+                <?php
+            }
+            ?>            
         </div>
 
         <div class="table-responsive">
@@ -62,19 +70,26 @@ $auth = new AuthenticationService();
                         <th>Username</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th class="hidden-480">Active</th>
+                        <!--<th class="hidden-480">Active</th>-->
                         <th class="hidden"></th>
                         <th class="hidden"></th>
-                         <?php if($auth->getIdentity()->roles_id == 3){
-                             ?>
-                                 <th class="hidden"></th>
-                                 <?php
+                        <th class="hidden"></th>
+                        <?php if ($auth->getIdentity()->roles_id == 3) {
+                             ?>   <th class="hidden"></th> <?php
+                        }else if($auth->getIdentity()->roles_id == 2) {
+                                if ($applying_user_rights->crud_user == 1) {
+                                  ?>   
+                            <th>Actions</th>
+                            <?php  
                                 }else{
+                                   ?>   <th class="hidden"></th> <?php
+                                }
+                        }else {
                             ?>   
-                        <th>Actions</th>
-                        <?php
-                              } 
-                          ?>
+                            <th>Actions</th>
+                            <?php
+                        }
+                        ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,17 +112,41 @@ $auth = new AuthenticationService();
                             <td><?php  echo $row['usr_email']; ?></td>
 
                             
-                            <td><?php  echo $row['roles_id']; ?></td>
-                            <td><?php  echo $row['usr_active']; ?></td>
+                            <td><?php
+                            if($row['roles_id'] == 1){
+                                echo "Admin";
+                            }else if($row['roles_id'] == 2){
+                                echo "Editor";
+                            }else{
+                                echo "Viewable";
+                            }
+                            ?></td>
+                            <!--<td><?php //  echo $row['usr_active']; ?></td>-->
                             <td class="hidden"></td>
                             <td class="hidden"></td>
-                             <?php if($auth->getIdentity()->roles_id == 3){
-                                 ?>
-                                 <td class="hidden"></td>
-                                 <?php
+                            <td class="hidden"></td>
+                             <?php if ($auth->getIdentity()->roles_id == 3) {
+                                ?>  <td class="hidden"></td> <?php
+                            } else if($auth->getIdentity()->roles_id == 2) {
+                                if ($applying_user_rights->crud_user == 1) {
+                                            ?>
+                                <td>
+                                     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+
+                                    <a class="green" href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>">
+                                        <i class="icon-pencil bigger-130"></i>
+                                    </a>
+                                    <!--<a href="<?php //echo $this->url('clients', array('action' => 'dialoge', 'id' => $client->id)); ?>" class="tooltip-error" data-rel="tooltip" title="Dialoge">-->
+                                    <a href="#" role="button" class="red actiondeleteuser" data-id="<?php echo $row['usr_id']; ?>" > 
+                                        <i class="icon-trash bigger-130"></i>
+                                    </a>
+                                </div>
+                                </td>    
                                 
-                                }else{
-                            ?>   
+                                <?php }else{
+                                           ?>  <td class="hidden"></td> <?php 
+                                        }
+                            }else{ ?>   
                             <td>
                                 <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
                                     <a class="blue" href="#">
@@ -130,13 +169,6 @@ $auth = new AuthenticationService();
                                         </button>
 
                                         <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-                                            <li>
-                                                <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-                                                    <span class="blue">
-                                                        <i class="icon-zoom-in bigger-120"></i>
-                                                    </span>
-                                                </a>
-                                            </li>
 
                                             <li>
                                                 <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>" class="tooltip-success" data-rel="tooltip" title="Edit">

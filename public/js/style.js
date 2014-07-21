@@ -12,10 +12,14 @@ $(document).ready(function() {
 //        alert(url);
         var website_id = url.substring(url.lastIndexOf('/') + 1);
         var parts = $("#form-field-select-1").attr('data-id');
+        var id = $("#form-field-select-1").val();
+        alert(id);
         if (parts == 'link') {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
         } else if(parts == 'lead'){
             window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+        } else if(parts == 'googleapi'){
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/googleapi/daterange?daterange=" + daterange + "&websiteid=" + website_id + "&id=" + id);
         } else {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/daterange?daterange=" + daterange + "&websiteid=" + website_id);
         }
@@ -408,7 +412,7 @@ $(document).ready(function() {
         } else if (dataid == "book") {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/book/changewebsite/" + rowId);
         } else if (dataid == "userright") {
-            window.location.assign("http://local.zendapp/userright/" + rowId);
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/userright/" + rowId);
         } else if (dataid == "lead") {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/changewebsite/" + rowId);
         } else {
@@ -483,7 +487,6 @@ function downloadAll(current_website_id) {
 }
 function deleterow(id, part) {
     var rowId = id;
-
     $('#modal-table').modal('show');
     var current_website = $("#form-field-select-1").val();
     $('.delete_user_btn').on('click', function(e) {
@@ -526,7 +529,7 @@ jQuery(function($) {
         "aoColumns": [
             {"bSortable": false},
             null, null, null, null, null, null, null,
-            {"bSortable": false}
+             {"bSortable": false},
         ]});
 
 
