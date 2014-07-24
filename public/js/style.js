@@ -1,6 +1,4 @@
 $(document).ready(function() {
-
-
     var cb = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -9,11 +7,10 @@ $(document).ready(function() {
         var daterange = $('.get-date-range').val();
         
         var url = $("#addbuttonlink").attr("href")
-//        alert(url);
         var website_id = url.substring(url.lastIndexOf('/') + 1);
         var parts = $("#form-field-select-1").attr('data-id');
+//        alerts(parts);
         var id = $("#form-field-select-1").val();
-        alert(id);
         if (parts == 'link') {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
         } else if(parts == 'lead'){
@@ -23,10 +20,6 @@ $(document).ready(function() {
         } else {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/daterange?daterange=" + daterange + "&websiteid=" + website_id);
         }
-
-//         $('#reportrange span').html(daterange);
-//        alert($('.get-date-range').val());
-        //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
     }
 
     var optionSet1 = {
@@ -306,9 +299,7 @@ $(document).ready(function() {
 
 
     $('.actiondeleteuser').on('click', function(e) {
-
         var rowId = $(this).attr('data-id');
-//        console.log(rowId);
         $('#modal-table').modal('show');
         $('.delete_user_btn').on('click', function(e) {
             $.ajax({
@@ -329,7 +320,6 @@ $(document).ready(function() {
         if (part == "link" || part == "transcript" || part == "book" || part == "lead") {
             var current_website = $("#form-field-select-1").val();
         }
-       
         if ($(':checkbox:checked').size() > 0) {
             $('#modal-table').modal('show');
             var value = 0;
@@ -337,7 +327,6 @@ $(document).ready(function() {
 
                 $(':checkbox:checked').each(function(i) {
                     var rowId = $(this).attr('data-id');
-//                    alert(rowId);
                     value = value + 1;
                     if (rowId != 'all') {
 
@@ -355,8 +344,10 @@ $(document).ready(function() {
                             var url = '/auth/admin/delete/' + rowId;
                         }
                         $.ajax({
+                            type: 'POST',
                             url: url,
                             dataType: 'json',
+                            data: {'current_website': current_website},
                             success: function(data)
                             {
                                 
@@ -379,12 +370,8 @@ $(document).ready(function() {
                             }
                         });
                     }
-                });
-                
+                });                
             });
-
-
-
         } else {
             if (part == "client") {
                 alert("Please select the Client");
@@ -415,6 +402,8 @@ $(document).ready(function() {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/userright/" + rowId);
         } else if (dataid == "lead") {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/changewebsite/" + rowId);
+        } else if (dataid == "googleapi") {
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/googleapi/changewebsite/" + rowId);
         } else {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/changewebsite/" + rowId);
         }
@@ -424,7 +413,6 @@ $(document).ready(function() {
     $('.actiondeletelink').on('click', function(e) {
 
         var rowId = $(this).attr('data-id');
-        alert(rowId);
         $('#modal-table').modal('show');
     });
 

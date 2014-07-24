@@ -20,6 +20,9 @@ class IndexController extends AbstractActionController {
     }
 
     public function loginAction() {
+         if ($user = $this->identity()) {
+              return $this->redirect()->toUrl('/clients/list');
+         }
         $user = $this->identity();
         $form = new AuthForm();
         $forgetpasswordform = new ForgottenPasswordForm();

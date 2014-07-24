@@ -21,6 +21,9 @@ if (php_sapi_name() === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['RE
 // Setup autoloading
 require 'init_autoloader.php';
 
+// $uploadPath = getcwd() . '\module\Clients\data\uploads\asd';
+//  mkdir($uploadPath, 0777, true);
+//  exit;
 // Run the application!
 Zend\Mvc\Application::init(require 'config/application.config.php')->run();
 // require './vendor/Classes/PHPExcel/PHPExcel.php'; 
