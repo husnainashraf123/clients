@@ -67,7 +67,9 @@ class AdminController extends AbstractActionController {
                     $this->getUsersTable()->insert($data);
                     $last_user_id = $this->getUsersTable()->lastInsertValue; // last inserted id
                     if ($data['roles_id'] == 2) {
+//                         print_r("Role is 2");
                         if ($last_user_id > 0) {
+//                            print_r($last_user_id);
                             $userRight = new UserRight();
                             $userRight->user_id = $last_user_id;
                             $userRight->crud_user = 0;
@@ -77,7 +79,7 @@ class AdminController extends AbstractActionController {
                             $userRight->crud_traffic = 0;
                             $userRight->crud_transcript = 0;
                             $userRight->crud_book = 0;
-                            $tableGateway = $this->getConnection();
+                            $tableGateway = $this->getConnectionUserRights();
                             $userRightTable = new UserRightTable($tableGateway);
                             $userRightTable->saveUserRight($userRight);
                         }
@@ -136,9 +138,11 @@ class AdminController extends AbstractActionController {
     public function deleteAction() {
         header('Content-Type: application/json');
         $id = $this->params()->fromRoute('id');
-
+        $tableGatewayUserRights = $this->getConnectionUserRights();
+        $userRightTable = new UserRightTable($tableGatewayUserRights);       
         if ($id) {
             $this->getUsersTable()->delete(array('usr_id' => $id));
+             $userRightTable->deleteUserRightUser($id);
         }
         echo json_encode(array('text' => ''));
         exit();

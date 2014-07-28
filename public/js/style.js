@@ -1,24 +1,23 @@
 $(document).ready(function() {
     var cb = function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
+//        console.log(start.toISOString(), end.toISOString(), label);
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         $('#reportrange input[name=date-range-picker]').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-
-        var daterange = $('.get-date-range').val();
-        
+        var daterange = $('.get-date-range').val();        
         var url = $("#addbuttonlink").attr("href")
         var website_id = url.substring(url.lastIndexOf('/') + 1);
         var parts = $("#form-field-select-1").attr('data-id');
-//        alerts(parts);
         var id = $("#form-field-select-1").val();
         if (parts == 'link') {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
         } else if(parts == 'lead'){
             window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+        } else if(parts == 'transcript'){
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/daterange?daterange=" + daterange + "&websiteid=" + website_id);
         } else if(parts == 'googleapi'){
             window.location.assign("http://dashboard.speakeasymarketinginc.com/googleapi/daterange?daterange=" + daterange + "&websiteid=" + website_id + "&id=" + id);
         } else {
-            window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/clients/report?daterange=" + daterange + "&websiteid=" + website_id);
         }
     }
 

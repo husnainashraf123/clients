@@ -81,6 +81,9 @@
                           <a href="<?php echo $this->url('clients', array('controller' => 'index', 'action' => 'list'));?>"><?php echo $this->translate('Clients'); ?></a>
                         </li>
                         <li class="grey">
+                          <a href="/userright"><?php echo $this->translate('User Rights'); ?></a>
+                        </li>
+                        <li class="grey">
                           <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'index'));?>"><?php echo $this->translate('Users'); ?></a>
                         </li>
                         
@@ -116,7 +119,7 @@
                             <li>
 
 
-                                <a href="/link/index/<?php echo $website->id; ?>" >
+                                <a href="/clients/select/<?php echo $website->id; ?>" >
                                     <i class="icon-user"></i>
                                     <span class="menu-text"> <?php echo $website->name; ?> </span>
                                 </a>
@@ -233,14 +236,14 @@ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+
         <script src="<?php $this->basePath() ?>/assets/js/jquery-ui-1.10.3.full.min.js"></script>
         <script src="<?php $this->basePath() ?>/assets/js/jquery.ui.touch-punch.min.js"></script>
         <script src="<?php $this->basePath() ?>/assets/js/jquery.maskedinput.min.js"></script>
-<!--	<script src="<?php $this->basePath() ?>/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="<?php $this->basePath() ?>/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
         <script src="<?php $this->basePath() ?>/assets/js/jquery.ui.touch-punch.min.js"></script>
         <script src="<?php $this->basePath() ?>/assets/js/jquery.slimscroll.min.js"></script>
         <script src="<?php $this->basePath() ?>/assets/js/jquery.easy-pie-chart.min.js"></script>
         <script src="<?php $this->basePath() ?>/assets/js/jquery.sparkline.min.js"></script>
         <script src="<?php $this->basePath() ?>/assets/js/flot/jquery.flot.min.js"></script>
         <script src="<?php $this->basePath() ?>/assets/js/flot/jquery.flot.pie.min.js"></script>
-        <script src="<?php $this->basePath() ?>/assets/js/flot/jquery.flot.resize.min.js"></script>-->
+        <script src="<?php $this->basePath() ?>/assets/js/flot/jquery.flot.resize.min.js"></script>
         
         <script src="<?php $this->basePath() ?>/js/jquery.tagsinput.js"></script>
         <script src="<?php $this->basePath() ?>/js/moment.js"></script>
@@ -248,7 +251,7 @@ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+
        
         
 <!--        <script src="<?php $this->basePath() ?>/assets/js/date-time/daterangepicker.min.js"></script>-->        
-<!--            <script src="<?php $this->basePath() ?>/assets/js/chosen.jquery.min.js"></script>
+            <script src="<?php $this->basePath() ?>/assets/js/chosen.jquery.min.js"></script>
                 <script src="<?php $this->basePath() ?>/assets/js/fuelux/fuelux.spinner.min.js"></script>
                 <script src="<?php $this->basePath() ?>/assets/js/date-time/bootstrap-datepicker.min.js"></script>
                 <script src="<?php $this->basePath() ?>/assets/js/date-time/bootstrap-timepicker.min.js"></script>
@@ -259,7 +262,7 @@ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+
                 <script src="<?php $this->basePath() ?>/assets/js/jquery.autosize.min.js"></script>
                 <script src="<?php $this->basePath() ?>/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
                 <script src="<?php $this->basePath() ?>/assets/js/jquery.maskedinput.min.js"></script>
-                <script src="<?php $this->basePath() ?>/assets/js/bootstrap-tag.min.js"></script>-->
+                <script src="<?php $this->basePath() ?>/assets/js/bootstrap-tag.min.js"></script>
         <!-- ace scripts -->
 
         <script src="<?php $this->basePath() ?>/assets/js/ace-elements.min.js"></script>

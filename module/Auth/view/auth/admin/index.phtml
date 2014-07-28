@@ -1,40 +1,42 @@
 <?php
+
 use Zend\Session\Container;
 use Zend\Authentication\AuthenticationService;
+
 $auth = new AuthenticationService();
 ?>
 <div class="row">
     <div class="col-xs-12">
-        <?php 
+        <?php
 //         print_r($applying_user_rights);exit;
-    if (isset($message) && $message != ''){ 
-      if($message == "User has been Deleted"){
-       ?>
-        <div class="alert alert-block alert-danger">
-            <button type="button" class="close" data-dismiss="alert">
-                    <i class="icon-remove"></i>
-            </button>
+        if (isset($message) && $message != '') {
+            if ($message == "User has been Deleted") {
+                ?>
+                <div class="alert alert-block alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="icon-remove"></i>
+                    </button>
 
-            <i class="icon-ok red"></i>
-            <?php echo $message; ?>
+                    <i class="icon-ok red"></i>
+                <?php echo $message; ?>
 
-        </div>          
-    <?php  }else{  ?>
-    
-        <div class="alert alert-block alert-success">
-            <button type="button" class="close" data-dismiss="alert">
-                    <i class="icon-remove"></i>
-            </button>
+                </div>          
+    <?php } else { ?>
 
-            <i class="icon-ok green"></i>
-            <?php echo $message; ?>
-        </div> 
-    <?php  } 
-    
-    } ?>
+                <div class="alert alert-block alert-success">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="icon-remove"></i>
+                    </button>
+
+                    <i class="icon-ok green"></i>
+                <?php echo $message; ?>
+                </div> 
+            <?php }
+        }
+        ?>
         <h3 class="header smaller lighter blue">Users List</h3>
         <div class="table-header" style="min-height: 42px;">
-             <?php if ($auth->getIdentity()->roles_id == 3) {
+            <?php if ($auth->getIdentity()->roles_id == 3) {
                 ?>
 
                 <?php
@@ -42,15 +44,15 @@ $auth = new AuthenticationService();
                 if ($applying_user_rights->crud_user == 1) {
                     ?>
                     <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'create')); ?>" class="btn btn-primary">Add New User</a>
-            <a href="#" class="btn btn-danger pull-right multiple-delete" data-id="user">Delete Selected User</a>
-                <?php
+                    <a href="#" class="btn btn-danger pull-right multiple-delete" data-id="user">Delete Selected User</a>
+                    <?php
                 } else {
                     
                 }
             } else {
                 ?>   
                 <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'create')); ?>" class="btn btn-primary">Add New User</a>
-            <a href="#" class="btn btn-danger pull-right multiple-delete" data-id="user">Delete Selected User</a>
+                <a href="#" class="btn btn-danger pull-right multiple-delete" data-id="user">Delete Selected User</a>
                 <?php
             }
             ?>            
@@ -74,18 +76,18 @@ $auth = new AuthenticationService();
                         <th class="hidden"></th>
                         <th class="hidden"></th>
                         <th class="hidden"></th>
-                        <?php if ($auth->getIdentity()->roles_id == 3) {
-                             ?>   <th class="hidden"></th> <?php
-                        }else if($auth->getIdentity()->roles_id == 2) {
+                            <?php if ($auth->getIdentity()->roles_id == 3) {
+                                ?>   <th class="hidden"></th> <?php
+                            } else if ($auth->getIdentity()->roles_id == 2) {
                                 if ($applying_user_rights->crud_user == 1) {
-                                  ?>   
-                            <th>Actions</th>
-                            <?php  
-                                }else{
-                                   ?>   <th class="hidden"></th> <?php
+                                    ?>   
+                                <th>Actions</th>
+                                    <?php
+                                } else {
+                                    ?>   <th class="hidden"></th> <?php
                                 }
-                        }else {
-                            ?>   
+                            } else {
+                                ?>   
                             <th>Actions</th>
                             <?php
                         }
@@ -100,100 +102,100 @@ $auth = new AuthenticationService();
                             ?>
                             <td class="center">
                                 <label>
-                                    <input type="checkbox" class="ace" data-id="<?php  echo $row['usr_id']; ?>" />
+                                    <input type="checkbox" class="ace" data-id="<?php echo $row['usr_id']; ?>" />
                                     <span class="lbl"></span>
                                 </label>
                             </td>
 
                             <td>
-                              <?php  echo $row['usr_id']; ?>
+                                 <?php echo $row['usr_id']; ?>
                             </td>
-                            <td><?php  echo $row['usr_name']; ?></td>
-                            <td><?php  echo $row['usr_email']; ?></td>
+                            <td><?php echo $row['usr_name']; ?></td>
+                            <td><?php echo $row['usr_email']; ?></td>
 
-                            
+
                             <td><?php
-                            if($row['roles_id'] == 1){
-                                echo "Admin";
-                            }else if($row['roles_id'] == 2){
-                                echo "Editor";
-                            }else{
-                                echo "Viewable";
-                            }
-                            ?></td>
-                            <!--<td><?php //  echo $row['usr_active']; ?></td>-->
+                                if ($row['roles_id'] == 1) {
+                                    echo "Admin";
+                                } else if ($row['roles_id'] == 2) {
+                                    echo "Editor";
+                                } else {
+                                    echo "Viewable";
+                                }
+                                ?></td>
+                            <!--<td><?php //  echo $row['usr_active'];  ?></td>-->
                             <td class="hidden"></td>
                             <td class="hidden"></td>
                             <td class="hidden"></td>
-                             <?php if ($auth->getIdentity()->roles_id == 3) {
+                            <?php if ($auth->getIdentity()->roles_id == 3) {
                                 ?>  <td class="hidden"></td> <?php
-                            } else if($auth->getIdentity()->roles_id == 2) {
+                            } else if ($auth->getIdentity()->roles_id == 2) {
                                 if ($applying_user_rights->crud_user == 1) {
-                                            ?>
+                                    ?>
+                                    <td>
+                                        <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+
+                                            <a class="green" href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>">
+                                                <i class="icon-pencil bigger-130"></i>
+                                            </a>
+                                            <!--<a href="<?php //echo $this->url('clients', array('action' => 'dialoge', 'id' => $client->id));  ?>" class="tooltip-error" data-rel="tooltip" title="Dialoge">-->
+                                            <a href="#" role="button" class="red actiondeleteuser" data-id="<?php echo $row['usr_id']; ?>" > 
+                                                <i class="icon-trash bigger-130"></i>
+                                            </a>
+                                        </div>
+                                    </td>    
+
+                                <?php } else {
+                                    ?>  <td class="hidden"></td> <?php
+                                }
+                            } else {
+                                ?>   
                                 <td>
-                                     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 
-                                    <a class="green" href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>">
-                                        <i class="icon-pencil bigger-130"></i>
-                                    </a>
-                                    <!--<a href="<?php //echo $this->url('clients', array('action' => 'dialoge', 'id' => $client->id)); ?>" class="tooltip-error" data-rel="tooltip" title="Dialoge">-->
-                                    <a href="#" role="button" class="red actiondeleteuser" data-id="<?php echo $row['usr_id']; ?>" > 
-                                        <i class="icon-trash bigger-130"></i>
-                                    </a>
-                                </div>
-                                </td>    
-                                
-                                <?php }else{
-                                           ?>  <td class="hidden"></td> <?php 
-                                        }
-                            }else{ ?>   
-                            <td>
-                                <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                                    <a class="blue" href="#">
-                                        <i class="icon-zoom-in bigger-130"></i>
-                                    </a>
 
-                                    <a class="green" href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>">
-                                        <i class="icon-pencil bigger-130"></i>
-                                    </a>
-                                    <!--<a href="<?php //echo $this->url('clients', array('action' => 'dialoge', 'id' => $client->id)); ?>" class="tooltip-error" data-rel="tooltip" title="Dialoge">-->
-                                    <a href="#" role="button" class="red actiondeleteuser" data-id="<?php echo $row['usr_id']; ?>" > 
-                                        <i class="icon-trash bigger-130"></i>
-                                    </a>
-                                </div>
-
-                                <div class="visible-xs visible-sm hidden-md hidden-lg">
-                                    <div class="inline position-relative">
-                                        <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-                                            <i class="icon-caret-down icon-only bigger-120"></i>
-                                        </button>
-
-                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-
-                                            <li>
-                                                <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>" class="tooltip-success" data-rel="tooltip" title="Edit">
-                                                    <span class="green">
-                                                        <i class="icon-edit bigger-120"></i>
-                                                    </span>
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="<?php echo $this->url('clients', array('action' => 'delete', 'id' => $row['usr_id'])); ?>" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                    <span class="red">
-                                                        <i class="icon-trash bigger-120"></i>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <a class="green" href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>">
+                                            <i class="icon-pencil bigger-130"></i>
+                                        </a>
+                                        <!--<a href="<?php //echo $this->url('clients', array('action' => 'dialoge', 'id' => $client->id));  ?>" class="tooltip-error" data-rel="tooltip" title="Dialoge">-->
+                                        <a href="#" role="button" class="red actiondeleteuser" data-id="<?php echo $row['usr_id']; ?>" > 
+                                            <i class="icon-trash bigger-130"></i>
+                                        </a>
                                     </div>
-                                </div>
-                            </td>
+
+                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                        <div class="inline position-relative">
+                                            <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+                                                <i class="icon-caret-down icon-only bigger-120"></i>
+                                            </button>
+
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+
+                                                <li>
+                                                    <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'update', 'id' => $row['usr_id'])); ?>" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                        <span class="green">
+                                                            <i class="icon-edit bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="<?php echo $this->url('clients', array('action' => 'delete', 'id' => $row['usr_id'])); ?>" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                        <span class="red">
+                                                            <i class="icon-trash bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
                             <?php
-                              } 
-                                ?>
+                        }
+                        ?>
                         </tr>
-                    <?php } 
+                    <?php
+                    }
 //             $message='';
 //        $session = new Container('link');
 //        $session->offsetSet('delete_user_msg', '');                    
@@ -220,12 +222,12 @@ $auth = new AuthenticationService();
             </div>
 
             <div class="modal-footer no-margin-top">
-               
-                   <button class="btn btn-sm btn-danger pull-left delete_user_btn" data-dismiss="modal">
-                        <i class="icon-remove"></i>
-                        Yes
-                    </button>
-                
+
+                <button class="btn btn-sm btn-danger pull-left delete_user_btn" data-dismiss="modal">
+                    <i class="icon-remove"></i>
+                    Yes
+                </button>
+
                 <button class="btn btn-sm btn-primary pull-left" data-dismiss="modal">
                     <i class="icon-only"></i>
                     Close
@@ -234,9 +236,9 @@ $auth = new AuthenticationService();
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-        </div><!-- /.modal-table -->
-                    <?php 
-             $message='';
-        $session = new Container('link');
-        $session->offsetSet('delete_user_msg', '');                    
-                    ?>  
+</div><!-- /.modal-table -->
+<?php
+$message = '';
+$session = new Container('link');
+$session->offsetSet('delete_user_msg', '');
+?>  
