@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="<?php $this->basePath() ?>/assets/css/ace.min.css" />
         <link rel="stylesheet" href="<?php $this->basePath() ?>/assets/css/ace-rtl.min.css" />
         <link rel="stylesheet" href="<?php $this->basePath() ?>/assets/css/ace-skins.min.css" />
-        <!--<link rel="stylesheet" href="<?php $this->basePath() ?>/css/style.css" />-->
+        <link rel="stylesheet" href="<?php $this->basePath() ?>/css/style.css" />
         <!--[if lte IE 8]>
           <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
         <![endif]-->
@@ -54,8 +54,8 @@
     </head>
 
     <body>
-        <?php // print_r($this->layout()->someVar);exit; ?>
-        <div class="navbar navbar-default" id="navbar">
+        <div class="login-background">
+            <div class="navbar navbar-default" id="navbar">
             <script type="text/javascript">
                 try {
                     ace.settings.check('navbar', 'fixed')
@@ -64,15 +64,61 @@
             </script>
 
             <div class="navbar-container" id="navbar-container">
-                <div class="navbar-header pull-left">
-                    <a href="<?php $this->basePath() ?>" class="navbar-brand">
+                <div class="navbar-header pull-left" style="margin: 10px 0px;">
+                    <a href="<?php $this->basePath() ?>" class="navbar-brand" >
                         <small>
                             <img src="<?php $this->basePath() ?>/img/speakeasy_logo.png" >
                         </small>
                     </a><!-- /.brand -->
                 </div><!-- /.navbar-header -->
+                <div class="navbar-header pull-right" role="navigation" style="min-height: 80px;">
+                        <ul class="nav ace-nav">						
 
-                <div class="navbar-header pull-right" role="navigation">
+                                <li class="light-blue" style="min-height: 80px;" >
+                                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                            <img class="nav-user-photo" style="margin-top: 20px"src="<?php $this->basePath() ?>/img/user.jpg" alt="Jason's Photo" />
+                                                <span class="user-info" style="margin-top: 25px">                                                        
+                                                        Jason adams
+                                                </span>
+
+                                                <i class="icon-caret-down"></i>
+                                        </a>
+
+                                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                                <li>
+                                                        <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'index'));?>">
+                                                                <i class="icon-male"></i>
+                                                                Users
+                                                        </a>
+                                                </li>
+
+                                                <li>
+                                                        <a href="/userright">
+                                                                <i class="icon-check"></i>
+                                                                User Rights
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                        <a href="<?php echo $this->url('clients', array('controller' => 'index', 'action' => 'list'));?>">
+                                                                <i class="icon-group"></i>
+                                                                Clients
+                                                        </a>
+                                                </li>
+
+                                                <li class="divider"></li>
+
+                                                <li>
+                                                        <a href="<?php echo $this->url('auth/default', array('controller' => 'index', 'action' => 'logout'));?>">
+                                                                <i class="icon-off"></i>
+                                                                Logout
+                                                        </a>
+                                                </li>
+                                        </ul>
+                                </li>
+                        </ul><!-- /.ace-nav -->
+                </div><!-- /.navbar-header -->
+
+<!--                <div class="navbar-header pull-right" role="navigation">
                     <ul class="nav ace-nav">
                         <li class="grey">
                           <a href="<?php echo $this->url('auth/default', array('controller' => 'index', 'action' => 'logout'));?>"><?php echo $this->translate('Logout'); ?></a>
@@ -87,8 +133,9 @@
                           <a href="<?php echo $this->url('auth/default', array('controller' => 'admin', 'action' => 'index'));?>"><?php echo $this->translate('Users'); ?></a>
                         </li>
                         
-                    </ul><!-- /.ace-nav -->
-                </div><!-- /.navbar-header -->
+                    </ul> /.ace-nav 
+                </div> /.navbar-header -->
+                				
             </div><!-- /.container -->
         </div>
         <div class="main-container" id="main-container">
@@ -145,7 +192,7 @@
                     </div><!-- /.page-content -->
                 </div><!-- /.main-content -->
 
-                <div class="ace-settings-container" id="ace-settings-container">
+<!--                <div class="ace-settings-container" id="ace-settings-container">
                     <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
                         <i class="icon-cog bigger-150"></i>
                     </div>
@@ -191,13 +238,14 @@
                             </label>
                         </div>
                     </div>
-                </div><!-- /#ace-settings-container -->
+                </div> /#ace-settings-container -->
             </div><!-- /.main-container-inner -->
 
             <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
                 <i class="icon-double-angle-up icon-only bigger-110"></i>
             </a>
         </div><!-- /.main-container -->
+    </div>
 
         <!-- basic scripts -->
 

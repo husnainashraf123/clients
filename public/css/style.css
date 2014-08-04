@@ -47,3 +47,25 @@ div.container a.brand {
     color: red;
     list-style: none;
 }
+.infobox{
+    width: 273px !important; 
+}
+.login-background{
+    background: url('../img/background_dashboard.jpg') no-repeat #2d1d28;
+}
+.ace-settings-container{
+    top: 10px !important;
+}
+
+.login-layout .widget-box{
+    box-shadow: 2px 2px 19px #333645;
+    -o-box-shadow: 2px 2px 19px #333645;
+    -webkit-box-shadow: 2px 2px 19px #333645;
+    -moz-box-shadow: 2px 2px 19px #333645;
+    padding: 0px !important;
+}
+.table-header{
+    background-color: #438eb9 !important;
+}
+
+

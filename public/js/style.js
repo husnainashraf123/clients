@@ -3,18 +3,20 @@ $(document).ready(function() {
 //        console.log(start.toISOString(), end.toISOString(), label);
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         $('#reportrange input[name=date-range-picker]').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        var daterange = $('.get-date-range').val();        
+        var daterange = $('.get-date-range').val();
         var url = $("#addbuttonlink").attr("href")
         var website_id = url.substring(url.lastIndexOf('/') + 1);
         var parts = $("#form-field-select-1").attr('data-id');
         var id = $("#form-field-select-1").val();
+//        var datetext=$('.ranges ul li .active').html();
+//        alert(datetext);
         if (parts == 'link') {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
-        } else if(parts == 'lead'){
+        } else if (parts == 'lead') {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/daterange?daterange=" + daterange + "&websiteid=" + website_id);
-        } else if(parts == 'transcript'){
+        } else if (parts == 'transcript') {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/daterange?daterange=" + daterange + "&websiteid=" + website_id);
-        } else if(parts == 'googleapi'){
+        } else if (parts == 'googleapi') {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/googleapi/daterange?daterange=" + daterange + "&websiteid=" + website_id + "&id=" + id);
         } else {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/clients/report?daterange=" + daterange + "&websiteid=" + website_id);
@@ -71,13 +73,8 @@ $(document).ready(function() {
             'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
         }
     };
-
     $('#reportrange span').html('Select Date Range');
-
-//    $('#reportrange input[name=date-range-picker]').val(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-
     $('#reportrange').daterangepicker(optionSet2, cb);
-//    $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
     $('#reportrange').on('show.daterangepicker', function() {
         console.log("show event fired");
     });
@@ -105,6 +102,8 @@ $(document).ready(function() {
     $('#destroy').click(function() {
         $('#reportrange').data('daterangepicker').remove();
     });
+
+//    $('.ranges ul li:nth-of-type(2)').addClass("active");
 
 });
 
@@ -182,7 +181,6 @@ $().ready(function() {
                 extension: 'Please enter a value with a valid mimetype.'
             },
         }
-
     });
     // validate Transcript form on keyup and submit
     $("#updateTranscript").validate({
@@ -238,7 +236,6 @@ $().ready(function() {
                 integer: "Please enter an integer value",
             },
         }
-
     });
     // validate Book form on keyup and submit
     $("#createBook").validate({
@@ -246,7 +243,7 @@ $().ready(function() {
             name: "required",
         },
         messages: {
-           name: "Please enter Book name",
+            name: "Please enter Book name",
         }
     });
     // validate Link form on keyup and submit
@@ -268,6 +265,7 @@ $().ready(function() {
 
 // A $( document ).ready() block.
 $(document).ready(function() {
+//    $('.ranges ul li:nth-of-type(2)').addClass("active");
 
     var yourRegex = /^www?\.[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;// url
     $('#website').tagsInput({
@@ -277,7 +275,6 @@ $(document).ready(function() {
 
 // deleting client by id
     $('.actiondelete').on('click', function(e) {
-//        console.log(this);
         var rowId = $(this).attr('data-id');
 
         $('#modal-table').modal('show');
@@ -295,8 +292,6 @@ $(document).ready(function() {
         });
 
     });
-
-
     $('.actiondeleteuser').on('click', function(e) {
         var rowId = $(this).attr('data-id');
         $('#modal-table').modal('show');
@@ -307,15 +302,13 @@ $(document).ready(function() {
                 success: function(data)
                 {
                     window.location.assign("http://dashboard.speakeasymarketinginc.com/auth/admin/setmessage");
-
                 }
             });
         });
-
     });
 
     $('.multiple-delete').on('click', function(e) {
-         var part = $(this).attr('data-id');
+        var part = $(this).attr('data-id');
         if (part == "link" || part == "transcript" || part == "book" || part == "lead") {
             var current_website = $("#form-field-select-1").val();
         }
@@ -323,12 +316,10 @@ $(document).ready(function() {
             $('#modal-table').modal('show');
             var value = 0;
             $('.delete_user_btn').on('click', function(e) {
-
                 $(':checkbox:checked').each(function(i) {
                     var rowId = $(this).attr('data-id');
                     value = value + 1;
                     if (rowId != 'all') {
-
                         if (part == "client") {
                             var url = '/clients/delete/' + rowId;
                         } else if (part == "link") {
@@ -349,27 +340,26 @@ $(document).ready(function() {
                             data: {'current_website': current_website},
                             success: function(data)
                             {
-                                
-                                if (value == $(':checkbox:checked').size()) {                    
-                                if (part == "client") {
-                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/clients/setmessage");
-                                } else if (part == "link") {
-                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/link/setmessage/" + current_website);
-                                } else if (part == "book") {
-                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/book/setmessage/" + current_website);
-                                } else if (part == "lead") {
-                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/setmessage/" + current_website);
-                                } else if (part == "transcript") {
-                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/setmessage/" + current_website);
-                                } else {
-                                    window.location.assign("http://dashboard.speakeasymarketinginc.com/auth/admin/setmessage");
-                                }
-                            }
 
+                                if (value == $(':checkbox:checked').size()) {
+                                    if (part == "client") {
+                                        window.location.assign("http://dashboard.speakeasymarketinginc.com/clients/setmessage");
+                                    } else if (part == "link") {
+                                        window.location.assign("http://dashboard.speakeasymarketinginc.com/link/setmessage/" + current_website);
+                                    } else if (part == "book") {
+                                        window.location.assign("http://dashboard.speakeasymarketinginc.com/book/setmessage/" + current_website);
+                                    } else if (part == "lead") {
+                                        window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/setmessage/" + current_website);
+                                    } else if (part == "transcript") {
+                                        window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/setmessage/" + current_website);
+                                    } else {
+                                        window.location.assign("http://dashboard.speakeasymarketinginc.com/auth/admin/setmessage");
+                                    }
+                                }
                             }
                         });
                     }
-                });                
+                });
             });
         } else {
             if (part == "client") {
@@ -410,7 +400,6 @@ $(document).ready(function() {
     });
 
     $('.actiondeletelink').on('click', function(e) {
-
         var rowId = $(this).attr('data-id');
         $('#modal-table').modal('show');
     });
@@ -443,7 +432,6 @@ function downloadAll(current_website_id) {
     var num = 0;
     if ($(':checkbox:checked').size() > 0) {
         $(':checkbox:checked').each(function(i) {
-
             var rowId = $(this).attr('data-id');
             if (rowId != 'all') {
                 num = 1;
@@ -493,7 +481,6 @@ function deleterow(id, part) {
             data: {'current_website': current_website},
             success: function(data)
             {
-                console.log(current_website);
 
                 if (part == 'link') {
                     window.location.assign("http://dashboard.speakeasymarketinginc.com/link/setmessage/" + current_website);
@@ -516,7 +503,7 @@ jQuery(function($) {
         "aoColumns": [
             {"bSortable": false},
             null, null, null, null, null, null, null,
-             {"bSortable": false},
+            {"bSortable": false},
         ]});
 
 
@@ -536,10 +523,8 @@ jQuery(function($) {
         var $parent = $source.closest('table')
         var off1 = $parent.offset();
         var w1 = $parent.width();
-
         var off2 = $source.offset();
         var w2 = $source.width();
-
         if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2))
             return 'right';
         return 'left';
