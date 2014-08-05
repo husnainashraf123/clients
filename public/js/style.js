@@ -405,20 +405,16 @@ $(document).ready(function() {
     });
 
     $("#datepicker").datepicker({
-        showOtherMonths: true,
-        selectOtherMonths: false,
+         format: "mm/dd/yyyy"
     });
     $("#date_received").datepicker({
-        showOtherMonths: true,
-        selectOtherMonths: false,
+         format: "mm/dd/yyyy"
     });
     $("#date_posted").datepicker({
-        showOtherMonths: true,
-        selectOtherMonths: false,
+         format: "mm/dd/yyyy"
     });
     $("#date_revised").datepicker({
-        showOtherMonths: true,
-        selectOtherMonths: false,
+        format: "mm/dd/yyyy"
     });
 
     $('.input-mask-phone').mask('(999) 999-9999');

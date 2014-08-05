@@ -48,7 +48,7 @@ div.container a.brand {
     list-style: none;
 }
 .infobox{
-    width: 273px !important; 
+    width: 295px !important; 
 }
 .login-background{
     background: url('../img/background_dashboard.jpg') no-repeat #2d1d28;
@@ -64,8 +64,21 @@ div.container a.brand {
     -moz-box-shadow: 2px 2px 19px #333645;
     padding: 0px !important;
 }
-.table-header{
+/*.table-header{
     background-color: #438eb9 !important;
+}*/
+.btn.btn-app.btn-light:hover {
+    background: linear-gradient(to bottom, #438eb9 0px, #438eb9 100%) repeat-x scroll 0 0 #438eb9 !important;
+    color: #fff !important;
 }
 
+.parts-box{
+ width: 19% !important;
+ padding: 52px 0 !important; 
+ /*background: url('../img/parts.jpg') repeat-y !important;*/       
+}
+
+/*.skin-1 .nav-list li.active > a:after {
+    border-right-color: #f05d4a !important;
+}*/
 

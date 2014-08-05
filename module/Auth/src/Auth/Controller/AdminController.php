@@ -21,6 +21,7 @@ class AdminController extends AbstractActionController {
         if ($user = $this->identity()) {
             $session = new Container('link');
             $delete_msg = $session->offsetGet('delete_user_msg');
+            $session->offsetSet('selected_client_id', '');
             //get current user data
             $auth = new AuthenticationService();
             $user_data = $auth->getIdentity();
