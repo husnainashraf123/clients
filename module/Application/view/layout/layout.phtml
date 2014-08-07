@@ -78,9 +78,9 @@
                         <ul class="nav ace-nav">						
 
                                 <li class="light-blue" style="min-height: 80px;" >
-                                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                                            <img class="nav-user-photo" style="margin-top: 20px"src="<?php $this->basePath() ?>/img/user.jpg" alt="Jason's Photo" />
-                                                <span class="user-info" style="margin-top: 25px">                                                        
+                                    <a data-toggle="dropdown" href="#" class="dropdown-toggle"style="padding: 15px 0px 10px 10px;">
+                                            <img class="nav-user-photo" style="margin-top: 0px"src="<?php $this->basePath() ?>/img/user.jpg" alt="Jason's Photo" />
+                                                <span class="user-info" style="margin-top: 8px">                                                        
                                                         Jason adams
                                                 </span>
 
@@ -163,8 +163,8 @@
                         <?php } ?>       
 
                                 <a href="/clients/select/<?php echo $website->id; ?>">
-                                    <i class="icon-user"></i>
-                                    <span class="menu-text"> <?php echo $website->name; ?> </span>
+<!--                                    <i class="icon-user"></i>-->
+                                    <span class="menu-text" style="font-weight: bold"> <?php echo strtoupper($website->name) ?> </span>
                                 </a>
                             </li>
                         <?php } ?>

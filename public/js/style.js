@@ -9,7 +9,7 @@ $(document).ready(function() {
         var parts = $("#form-field-select-1").attr('data-id');
         var id = $("#form-field-select-1").val();
 //        var datetext=$('.ranges ul li .active').html();
-//        alert(datetext);
+//        alert(datetext); 
         if (parts == 'link') {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
         } else if (parts == 'lead') {
@@ -73,7 +73,8 @@ $(document).ready(function() {
             'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
         }
     };
-    $('#reportrange span').html('Select Date Range');
+    var textdata=$('.current-websiteid').attr('data-id');
+    $('#reportrange span').html(textdata);
     $('#reportrange').daterangepicker(optionSet2, cb);
     $('#reportrange').on('show.daterangepicker', function() {
         console.log("show event fired");
