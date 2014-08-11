@@ -108,9 +108,7 @@ $(document).ready(function() {
 
 });
 
-
-
-$().ready(function() {
+$(document).ready(function() {
 
     // validate User form on keyup and submit
     $("#createUser").validate({
@@ -249,6 +247,7 @@ $().ready(function() {
     });
     // validate Link form on keyup and submit
     $("#createLink").validate({
+//        ignore: [],  // <-- allows for validation of hidden fields
         rules: {
             url: {
                 required: true,
@@ -454,9 +453,44 @@ function downloadAll(current_website_id) {
 
         }
     });
-
-
 }
+
+//function getHolidayModal(type, method ,current_website) {
+////    alert(method)
+////    alert(current_website)
+//    
+//        if (type == 'GET') {
+//            data = null;
+//        }
+//        else {
+//            data = $('#createLink').serialize();
+//        }
+////        if (type == 'POST') {
+////            $('.modal-body').block({
+////                message: null
+////
+////            });
+////        }
+//        
+//        $.ajax({
+//            type: type,
+//            url: '/link/' + method + '/' + current_website,
+//            data: data,
+//            dataType: 'html',
+//            success: function(result)
+//            {
+//
+//                if (result === 'done')
+//                {
+//                    window.location.reload();
+//                }
+//                else {
+//                    $('.modal-body').html(result);
+//                }
+//            }
+//        });
+//    }
+ 
 function deleterow(id, part) {
     var rowId = id;
     $('#modal-table').modal('show');
