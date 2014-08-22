@@ -25,7 +25,14 @@ class Module
 
     $myService = $serviceManager->get('Clients\Modal\Client');
 
-    $viewModel->someVar = $myService->fetchAll();
+//    $viewModel->someVar= $myService->fetchAll();
+//    error_reporting(E_ALL);
+//            ini_set('display_errors', '1');
+    $viewModel->someVar = $myService->ascfetchAll();
+//    print_r("asdasdas");
+//    print_r($viewModell);
+//    print_r($viewModel->someVar);
+//exit;
     $e->getViewModel()->setVariable('someVar2', $myService->fetchAll());
 //    print_r($viewModel->someVar);exit;
     }

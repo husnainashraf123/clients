@@ -249,12 +249,14 @@ $(document).ready(function() {
     $("#createLink").validate({
 //        ignore: [],  // <-- allows for validation of hidden fields
         rules: {
+            date: "required",
             url: {
                 required: true,
                 url: true
             },
         },
         messages: {
+             date: "Please select Date",
             url: {
                 required: "Please provide a URL",
                 url: "Please enter valid URL"
@@ -265,8 +267,6 @@ $(document).ready(function() {
 
 // A $( document ).ready() block.
 $(document).ready(function() {
-//    $('.ranges ul li:nth-of-type(2)').addClass("active");
-
     var yourRegex = /^www?\.[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;// url
     $('#website').tagsInput({
         //    width: 'auto',
@@ -404,17 +404,25 @@ $(document).ready(function() {
         $('#modal-table').modal('show');
     });
 
-    $("#datepicker").datepicker({
+    $("#date").datepicker({
          format: "mm/dd/yyyy"
+    }).on('changeDate', function(e){
+    $(this).datepicker('hide');     
     });
     $("#date_received").datepicker({
          format: "mm/dd/yyyy"
+     }).on('changeDate', function(e){
+    $(this).datepicker('hide');       
     });
     $("#date_posted").datepicker({
          format: "mm/dd/yyyy"
+      }).on('changeDate', function(e){
+    $(this).datepicker('hide');      
     });
     $("#date_revised").datepicker({
         format: "mm/dd/yyyy"
+     }).on('changeDate', function(e){
+    $(this).datepicker('hide');      
     });
 
     $('.input-mask-phone').mask('(999) 999-9999');
@@ -512,7 +520,6 @@ function deleterow(id, part) {
             data: {'current_website': current_website},
             success: function(data)
             {
-
                 if (part == 'link') {
                     window.location.assign("http://dashboard.speakeasymarketinginc.com/link/setmessage/" + current_website);
                 } else if (part == "book") {
@@ -522,15 +529,14 @@ function deleterow(id, part) {
                 } else {
                     window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/setmessage/" + current_website);
                 }
-
             }
         });
     });
-
 }
 
 jQuery(function($) {
     var oTable1 = $('#sample-table-2').dataTable({
+        'iDisplayLength': 100,    //to display 100 record
         "aoColumns": [
             {"bSortable": false},
             null, null, null, null, null, null, null,
