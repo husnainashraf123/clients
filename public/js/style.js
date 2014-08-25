@@ -5,21 +5,22 @@ $(document).ready(function() {
         $('#reportrange input[name=date-range-picker]').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         var daterange = $('.get-date-range').val();
         var url = $("#addbuttonlink").attr("href")
-        var website_id = url.substring(url.lastIndexOf('/') + 1);
+        var client_id = url.substring(url.lastIndexOf('/') + 1);
         var parts = $("#form-field-select-1").attr('data-id');
-        var id = $("#form-field-select-1").val();
+        var current_website_id = $("#form-field-select-1").val();
 //        var datetext=$('.ranges ul li .active').html();
-//        alert(datetext); 
+        alert(parts); 
+        alert(current_website_id); 
         if (parts == 'link') {
-            window.location.assign("http://dashboard.speakeasymarketinginc.com/link/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/link/daterange?daterange=" + daterange + "&client_id=" + client_id + "&current_website_id=" + current_website_id);
         } else if (parts == 'lead') {
-            window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/lead/daterange?daterange=" + daterange + "&client_id=" + client_id + "&current_website_id=" + current_website_id);
         } else if (parts == 'transcript') {
-            window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/daterange?daterange=" + daterange + "&websiteid=" + website_id);
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/transcript/daterange?daterange=" + daterange + "&client_id=" + client_id + "&current_website_id=" + current_website_id);
         } else if (parts == 'googleapi') {
-            window.location.assign("http://dashboard.speakeasymarketinginc.com/googleapi/daterange?daterange=" + daterange + "&websiteid=" + website_id + "&id=" + id);
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/googleapi/daterange?daterange=" + daterange + "&client_id=" + client_id + "&current_website_id=" + current_website_id);
         } else {
-            window.location.assign("http://dashboard.speakeasymarketinginc.com/clients/report?daterange=" + daterange + "&websiteid=" + website_id);
+            window.location.assign("http://dashboard.speakeasymarketinginc.com/clients/report?daterange=" + daterange + "&client_id=" + client_id);
         }
     }
 
@@ -73,7 +74,7 @@ $(document).ready(function() {
             'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
         }
     };
-    var textdata=$('.current-websiteid').attr('data-id');
+    var textdata = $('.current-websiteid').attr('data-id');
     $('#reportrange span').html(textdata);
     $('#reportrange').daterangepicker(optionSet2, cb);
     $('#reportrange').on('show.daterangepicker', function() {
@@ -256,7 +257,7 @@ $(document).ready(function() {
             },
         },
         messages: {
-             date: "Please select Date",
+            date: "Please select Date",
             url: {
                 required: "Please provide a URL",
                 url: "Please enter valid URL"
@@ -383,6 +384,7 @@ $(document).ready(function() {
     $("#form-field-select-1").change(function() {
         var rowId = this.value;
         var dataid = $('#form-field-select-1').attr('data-id');
+//        alert(dataid);
         if (dataid == "link") {
             window.location.assign("http://dashboard.speakeasymarketinginc.com/link/changewebsite/" + rowId);
         } else if (dataid == "book") {
@@ -405,24 +407,24 @@ $(document).ready(function() {
     });
 
     $("#date").datepicker({
-         format: "mm/dd/yyyy"
-    }).on('changeDate', function(e){
-    $(this).datepicker('hide');     
+        format: "mm/dd/yyyy"
+    }).on('changeDate', function(e) {
+        $(this).datepicker('hide');
     });
     $("#date_received").datepicker({
-         format: "mm/dd/yyyy"
-     }).on('changeDate', function(e){
-    $(this).datepicker('hide');       
+        format: "mm/dd/yyyy"
+    }).on('changeDate', function(e) {
+        $(this).datepicker('hide');
     });
     $("#date_posted").datepicker({
-         format: "mm/dd/yyyy"
-      }).on('changeDate', function(e){
-    $(this).datepicker('hide');      
+        format: "mm/dd/yyyy"
+    }).on('changeDate', function(e) {
+        $(this).datepicker('hide');
     });
     $("#date_revised").datepicker({
         format: "mm/dd/yyyy"
-     }).on('changeDate', function(e){
-    $(this).datepicker('hide');      
+    }).on('changeDate', function(e) {
+        $(this).datepicker('hide');
     });
 
     $('.input-mask-phone').mask('(999) 999-9999');
@@ -463,42 +465,6 @@ function downloadAll(current_website_id) {
     });
 }
 
-//function getHolidayModal(type, method ,current_website) {
-////    alert(method)
-////    alert(current_website)
-//    
-//        if (type == 'GET') {
-//            data = null;
-//        }
-//        else {
-//            data = $('#createLink').serialize();
-//        }
-////        if (type == 'POST') {
-////            $('.modal-body').block({
-////                message: null
-////
-////            });
-////        }
-//        
-//        $.ajax({
-//            type: type,
-//            url: '/link/' + method + '/' + current_website,
-//            data: data,
-//            dataType: 'html',
-//            success: function(result)
-//            {
-//
-//                if (result === 'done')
-//                {
-//                    window.location.reload();
-//                }
-//                else {
-//                    $('.modal-body').html(result);
-//                }
-//            }
-//        });
-//    }
- 
 function deleterow(id, part) {
     var rowId = id;
     $('#modal-table').modal('show');
@@ -536,7 +502,7 @@ function deleterow(id, part) {
 
 jQuery(function($) {
     var oTable1 = $('#sample-table-2').dataTable({
-        'iDisplayLength': 100,    //to display 100 record
+        'iDisplayLength': 100, //to display 100 record
         "aoColumns": [
             {"bSortable": false},
             null, null, null, null, null, null, null,
